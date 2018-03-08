@@ -1,6 +1,7 @@
 import model.GridSettings;
 import model.GridState;
 import model.GridWorld;
+import util.ValueIteration;
 
 public class TestApp {
 
@@ -12,6 +13,15 @@ public class TestApp {
 		GridSettings.loadSettings(gridWorld);
 		
 		System.out.println(gridWorld);
+		System.out.println("The criteria for convergence is: "+GridSettings.CONVERGENCE_CRITERIA);
+		
+		ValueIteration vi = new ValueIteration(gridWorld);
+		
+		double[] utility= vi.doValueIteration(GridSettings.DISCOUNT_FACTOR);
+		
+		for(int i = 0; i < utility.length; i++) {
+			System.out.println("index " + i +" is: " + utility[i]);
+		}
 		
 	}
 

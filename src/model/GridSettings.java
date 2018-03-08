@@ -16,6 +16,14 @@ public class GridSettings {
 	static final String POSITIVE_GRIDS	= "0,5 2,5 3,4 4,3 5,2 5,5";
 	static final String NEGATIVE_GRIDS	= "1,4 2,3 3,2 4,1 5,4";
 	
+	// factors to determine convergence
+	public static final double DISCOUNT_FACTOR = 0.99;
+	// what values to use ?????
+	static final double R_MAX = 1.0; // is this the max reward??
+	static final double C = 25; // what is this even?
+	// check this formula again in the future
+	public static final double CONVERGENCE_CRITERIA = C*R_MAX*(1.0 - DISCOUNT_FACTOR)/DISCOUNT_FACTOR;
+	
 	public static void loadSettings(GridWorld gw) {
 		int x;
 		int y;
