@@ -20,7 +20,9 @@ public class TestApp {
 		double[] utility= vi.doValueIteration(GridSettings.DISCOUNT_FACTOR);
 		
 		for(int i = 0; i < utility.length; i++) {
-			System.out.println("index " + i +" is: " + utility[i]);
+			if(gridWorld.getGridState(i) != GridState.WALL) {
+				System.out.println("index " + i +" is: " + utility[i]);
+			}
 		}
 		
 	}

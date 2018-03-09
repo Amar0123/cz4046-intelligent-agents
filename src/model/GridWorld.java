@@ -41,7 +41,7 @@ public class GridWorld implements ValueIterable{
 	public String toString() {
 		String layout = "";
 		
-		for(int j = row -1; j >= 0; j--) {
+		for(int j = 0; j < row; j++) {
 			for(int i = 0; i < col; i++) {
 				switch(states[i][j]) {
 					case WALL:
@@ -72,36 +72,36 @@ public class GridWorld implements ValueIterable{
 		
 		double upUtil,downUtil,leftUtil,rightUtil;
 		
-		if(index + col >= getLength() || getGridState(index+col) == GridState.WALL) {
-			upUtil = currentReward;
+		if(index % col == 0 || getGridState(index-1) == GridState.WALL) {
+			upUtil = currentUtilities[index];
 		}else {
-			upUtil = currentUtilities[index+col];
+			upUtil = currentUtilities[index-1];
+		}
+		
+		if(index % col == 5 || getGridState(index+1) == GridState.WALL) {
+			downUtil = currentUtilities[index];
+		}else {
+			downUtil = currentUtilities[index+1];
+		}
+		
+		if(index + col >= getLength() || getGridState(index+col) == GridState.WALL) {
+			rightUtil = currentUtilities[index];
+		}else {
+			rightUtil = currentUtilities[index+col];
 		}
 		
 		if(index - col < 0 || getGridState(index-col) == GridState.WALL) {
-			downUtil = currentReward;
+			leftUtil = currentUtilities[index];
 		}else {
-			downUtil = currentUtilities[index-col];
-		}
-		
-		if(index + 1 >= getLength() || getGridState(index+1) == GridState.WALL) {
-			rightUtil = currentReward;
-		}else {
-			rightUtil = currentUtilities[index+1];
-		}
-		
-		if(index - 1 < 0 || getGridState(index-1) == GridState.WALL) {
-			leftUtil = currentReward;
-		}else {
-			leftUtil = currentUtilities[index-1];
+			leftUtil = currentUtilities[index-col];
 		}
 		
 		double upReward, downReward,leftReward,rightReward;
 		
-		upReward = currentReward + discount *(0.8 * upUtil + 0.1*leftUtil + 0.1*rightUtil);
-		downReward = currentReward + discount *(0.8 * downUtil + 0.1*leftUtil + 0.1*rightUtil);
-		leftReward = currentReward + discount *(0.8 * leftUtil + 0.1*upUtil + 0.1*downUtil);
-		rightReward = currentReward + discount *(0.8 * rightUtil + 0.1*upUtil + 0.1*downUtil);
+		upReward	= currentReward + discount *(0.8 * upUtil + 0.1*leftUtil + 0.1*rightUtil);
+		downReward	= currentReward + discount *(0.8 * downUtil + 0.1*leftUtil + 0.1*rightUtil);
+		leftReward	= currentReward + discount *(0.8 * leftUtil + 0.1*upUtil + 0.1*downUtil);
+		rightReward	= currentReward + discount *(0.8 * rightUtil + 0.1*upUtil + 0.1*downUtil);
 		
 		return Math.max(Math.max(upReward, downReward), Math.max(leftReward, rightReward));
 	}
@@ -134,11 +134,11 @@ public class GridWorld implements ValueIterable{
 	
 	
 	private int getXfromIndex(int index) {
-		return index % col;
+		return index / col;
 	}
 
 	private int getYfromIndex(int index) {
-		return index / col;
+		return index % col;
 	}
 	
 	
