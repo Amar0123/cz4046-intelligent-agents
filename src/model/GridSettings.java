@@ -25,37 +25,4 @@ public class GridSettings {
 	// check this formula again in the future
 	public static final double CONVERGENCE_CRITERIA = EPISILON*(1.0 - DISCOUNT_FACTOR)/DISCOUNT_FACTOR;
 	
-	public static void loadSettings(GridWorld gw) {
-		int x;
-		int y;
-		String[] coor;
-
-		String[] wall = WALL_GRIDS.split(" ");
-		String[] positive = POSITIVE_GRIDS.split(" ");
-		String[] negative = NEGATIVE_GRIDS.split(" ");
-		
-		for(int i = 0; i < wall.length; i++) {
-			coor = wall[i].split(",");
-			x = Integer.parseInt(coor[0]);
-			y = Integer.parseInt(coor[1]);
-			gw.setGridState(x,y, GridState.WALL);
-		}
-
-		for(int i = 0; i < positive.length; i++) {
-			coor = positive[i].split(",");
-			x = Integer.parseInt(coor[0]);
-			y = Integer.parseInt(coor[1]);
-			gw.setGridState(x,y, GridState.POSITIVE);
-		}
-		
-		for(int i = 0; i < negative.length; i++) {
-			coor = negative[i].split(",");
-			x = Integer.parseInt(coor[0]);
-			y = Integer.parseInt(coor[1]);
-			gw.setGridState(x,y, GridState.NEGATIVE);
-		}
-		
-		gw.setPosition(START_X, START_Y);
-	}
-	
 }
