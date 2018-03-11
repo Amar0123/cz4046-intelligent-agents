@@ -2,7 +2,7 @@ package model;
 
 import game.GameState;
 
-public class GridWorldState extends GameState{
+public class GridWorldState extends GameState<GridWorldAction>{
 	
 	public enum StateType{
 		NORMAL(GridSettings.REWARD_NORMAL),
@@ -27,10 +27,27 @@ public class GridWorldState extends GameState{
 	private StateType type;
 	
 	public GridWorldState(int x, int y, StateType type) {
-		super(type.getReward());
+		super(type.getReward() , GridWorldAction.UP);
 		this.type = type;
 		this.x = x;
 		this.y = y;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public StateType getType() {
+		return type;
+	}
+
+	public void setType(StateType type) {
+		this.type = type;
+		setReward(type.getReward());
 	}
 	
 }
