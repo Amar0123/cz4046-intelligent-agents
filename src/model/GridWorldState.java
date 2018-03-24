@@ -5,10 +5,12 @@ import game.GameState;
 public class GridWorldState extends GameState<GridWorldAction>{
 	
 	public enum StateType{
-		NORMAL(GridSettings.REWARD_NORMAL),
-		WALL(GridSettings.REWARD_WALL),
-		POSITIVE(GridSettings.REWARD_POSITIVE),
-		NEGATIVE(GridSettings.REWARD_NEGATIVE);
+		NORMAL(GridSettingsLoader.REWARD_NORMAL),
+		WALL(GridSettingsLoader.REWARD_WALL),
+		POSITIVE(GridSettingsLoader.REWARD_POSITIVE),
+		NEGATIVE(GridSettingsLoader.REWARD_NEGATIVE),
+		POSITIVE_PLUS(GridSettingsLoader.REWARD_POSITIVE_PLUS),
+		NEGATIVE_PLUS(GridSettingsLoader.REWARD_NEGATIVE_PLUS);
 		
 		private double reward;
 		

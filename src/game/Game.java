@@ -87,6 +87,10 @@ public abstract class Game<T extends GameState<S>, S extends GameAction> {
 		}
 	}
 	
+	public int getLength() {
+		return states.size();
+	}
+	
 	public abstract String printUtility();
 	
 	public abstract double getUtility(T state, S action, double discount);

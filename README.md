@@ -7,4 +7,8 @@ The game package provides the required interface/abstract classes needed to do v
 
 The model package is specifically for the assignment.
 
+# For part 2
+we create a bigger maze with 2 additional rewards, 2 points and negative 2 points.
+The reward for each state are randomly generated.
+
 

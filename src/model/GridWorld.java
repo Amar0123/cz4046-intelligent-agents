@@ -91,9 +91,13 @@ public class GridWorld extends Game<GridWorldState, GridWorldAction>{
 				}else if(st == StateType.POSITIVE) {
 					message += "+ ";
 				}else if(st == StateType.NEGATIVE) {
-					message += "~ ";
-				}else {
 					message += "- ";
+				}else if(st == StateType.POSITIVE_PLUS) {
+					message += "X ";
+				}else if(st == StateType.NEGATIVE_PLUS) {
+					message += "= ";
+				}else {
+					message += "~ ";
 				}
 			}
 			message += "\n";
@@ -137,6 +141,10 @@ public class GridWorld extends Game<GridWorldState, GridWorldAction>{
 	
 	public void setState(int x, int y, StateType st) {
 		int index = getIndexFromXY(x,y);
+		states.get(index).setType(st);
+	}
+
+	public void setState(int index, StateType st) {
 		states.get(index).setType(st);
 	}
 	
