@@ -7,12 +7,20 @@ public abstract class Game<T extends GameState<S>, S extends GameAction> {
 	protected List<T> states;
 	protected List<S> actions;
 	protected List<Double> utilities = new ArrayList<Double>();
+	protected List<Double> avgUtility;
 	
 	protected Game() {
 		
 	}
 	
-	public void doValueIteration(double discount, double convergenceCriteria){
+	/**
+	 * This methods performs value iteration and returns the number of iterations before reaching the convergence criteria
+	 * 
+	 * @param discount
+	 * @param convergenceCriteria
+	 * @return
+	 */
+	public int doValueIteration(double discount, double convergenceCriteria){
 		initUtilities();
 		double delta;
 		int counter = 0;
@@ -30,12 +38,19 @@ public abstract class Game<T extends GameState<S>, S extends GameAction> {
 			}
 			utilities = temp;
 			counter++;
+			avgUtility.add(findAverageUtility());
 		}while(delta > convergenceCriteria);
 		
-		System.out.println("Number of iterations for value iteration is : " + counter);
+		return counter;
 	}
 	
-	public void doPolicyIteration(double discount) {
+	/**
+	 * This methods performs policy iteration and returns the number of iterations before reaching the convergence criteria
+	 * 
+	 * @param discount
+	 * @return
+	 */
+	public int doPolicyIteration(double discount) {
 		initUtilities();
 		int counter = 0;
 		boolean changed;
@@ -61,9 +76,10 @@ public abstract class Game<T extends GameState<S>, S extends GameAction> {
 			utilities = tempUtility;
 			
 			counter++;
+			avgUtility.add(findAverageUtility());
 		}while(changed);
 
-		System.out.println("Number of iterations for policy iteration is : " + counter);
+		return counter;
 		
 	}
 	
@@ -80,15 +96,39 @@ public abstract class Game<T extends GameState<S>, S extends GameAction> {
 		return max;
 	}
 	
-	protected void initUtilities() {
+	private void initUtilities() {
 		utilities = new ArrayList<Double>();
 		for(int i = 0; i < states.size(); i++) {
 			utilities.add(states.get(i).getReward());
 		}
+		avgUtility = new ArrayList<Double>();
+	}
+	
+	private double findAverageUtility() {
+		double total = 0;
+		double avg = 0;
+		
+		for(int i = 0; i < states.size(); i++) {
+			total+=utilities.get(i);
+		}
+		
+		avg = total / states.size();
+		
+		return avg;
 	}
 	
 	public int getLength() {
 		return states.size();
+	}
+	
+	public String printUtilityEstimate() {
+		String msg = "Number of iteration,Average utility\n";
+		
+		for(int i = 1; i <= avgUtility.size(); i ++) {
+			msg += (i+","+avgUtility.get(i-1)+"\n");
+		}
+		
+		return msg;
 	}
 	
 	public abstract String printUtility();
